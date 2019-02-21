@@ -29,12 +29,16 @@ int main()
 
     //std::vector< tpl::future<void> > futures_vec;
 
-    auto thread_pool = std::make_shared< tpl::pool >( 4 );
+
     {
+        ScopeTimer delay( "Seconds to complete delay test:" );
+
+        auto thread_pool = std::make_shared< tpl::pool >( 100 );
+
         auto func = []( double sec ){ std::this_thread::sleep_for( std::chrono::duration<double>(sec) ); };
 
         size_t i = 0;
-        while( i < 10000 )
+        while( i < 1000 )
         {
             thread_pool->submit( func, i < thread_pool->num_threads() ? double(i)/double(thread_pool->num_threads()) : 1.0 ).release();
             //thread_pool->submit( func, 1.0 ).release();
@@ -49,6 +53,29 @@ int main()
 
         std::cout << std::endl;
     }
+
+    {
+        ScopeTimer delay( "Seconds to complete loop test:" );
+
+        std::vector< int > vec( 10000, 1 );
+
+        struct Sum
+        {
+            int sum;
+
+            Sum(): sum{0} { }
+            void operator()(int n) { sum += n; }
+        };
+
+        tpl::pool full_pool;
+        tpl::pool single_pool( 1 );
+
+        tpl::for_each( full_pool, vec.begin(), vec.end(), []( int& i ){ i+= 3; } );
+        auto sum = tpl::for_each( single_pool, vec.begin(), vec.end(), Sum() );
+
+        std::cout << "sum = " << sum.sum << std::endl;
+    }
+
 
     return 0;
 }

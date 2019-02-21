@@ -6,6 +6,13 @@
 namespace tpl
 {
     template < typename T >
+    safe_queue< T >::safe_queue()
+         : queue(), queue_mutex(), condition(), valid( true )
+    {
+        /*  */
+    }
+
+    template < typename T >
     safe_queue< T >::~safe_queue()
     {
         // invalidate the queue, which halts all pushes and pops

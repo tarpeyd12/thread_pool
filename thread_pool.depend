@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1550702447 source:c:\users\tarpeyd12\documents\github\thread_pool\pool\thread_pool.cpp
+	<cassert>
+	<iostream>
+	"thread_pool.hpp"
+
+1550786366 c:\users\tarpeyd12\documents\github\thread_pool\pool\thread_pool.hpp
+	<atomic>
+	<vector>
+	<thread>
+	"safe_queue.hpp"
+	"task.hpp"
+	"thread_pool.inl"
+
+1550705228 c:\users\tarpeyd12\documents\github\thread_pool\pool\safe_queue.hpp
+	<queue>
+	<mutex>
+	<condition_variable>
+	<atomic>
+	"safe_queue.inl"
+
+1550705269 c:\users\tarpeyd12\documents\github\thread_pool\pool\safe_queue.inl
+	<utility>
+
+1550702526 c:\users\tarpeyd12\documents\github\thread_pool\pool\task.hpp
+	<utility>
+
+1550787682 c:\users\tarpeyd12\documents\github\thread_pool\pool\thread_pool.inl
+	<future>
+	<list>
+	"future.hpp"
+
+1550703181 c:\users\tarpeyd12\documents\github\thread_pool\pool\future.hpp
+	<future>
+	<atomic>
+	"future.inl"
+
+1550703183 c:\users\tarpeyd12\documents\github\thread_pool\pool\future.inl
+	<utility>
+
+1550790895 source:c:\users\tarpeyd12\documents\github\thread_pool\main.cpp
+	<iostream>
+	<iomanip>
+	<chrono>
+	<thread>
+	<cmath>
+	"pool/thread_pool.hpp"
+

@@ -22,7 +22,7 @@ namespace tpl
 
         public:
 
-            safe_queue() = default;
+            safe_queue();
             ~safe_queue();
 
             void push( T value );

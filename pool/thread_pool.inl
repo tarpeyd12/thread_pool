@@ -2,6 +2,7 @@
 #define POOL_THREAD_POOL_INL_INCLUDED
 
 #include <future>
+#include <list>
 
 #include "future.hpp"
 
@@ -18,7 +19,6 @@ namespace tpl
 
         packaged_task_type task{ std::move( bound_task ) };
         future< func_result_type > result_future{ task.get_future() };
-        //auto result_future = task.get_future();
         work_queue.push( std::make_unique< task_type >( std::move( task ) ) );
         return result_future;
     }
@@ -39,6 +39,25 @@ namespace tpl
     pool::empty() const
     {
         return work_queue.empty();
+    }
+
+    template< class InputIt, class UnaryFunction >
+    UnaryFunction
+    for_each( pool& thread_pool, InputIt first, InputIt last, UnaryFunction f )
+    {
+        std::list< future< void > > futures; // to store the futures
+
+        for( ; first != last; ++first )
+        {
+            futures.emplace_back( thread_pool.submit( [&f,first]{ f(*first); } ) );
+        }
+
+        while( !futures.empty() )
+        {
+            futures.pop_front();
+        }
+
+        return f;
     }
 }
 

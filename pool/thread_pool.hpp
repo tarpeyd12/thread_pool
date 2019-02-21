@@ -42,6 +42,9 @@ namespace tpl
             void worker_method();
 
     };
+
+    template< class InputIt, class UnaryFunction >
+    UnaryFunction for_each( pool& thread_pool, InputIt first, InputIt last, UnaryFunction f );
 }
 
 #include "thread_pool.inl"
